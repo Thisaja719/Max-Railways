@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Train Ticket Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin-top: 50px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .confirmation {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #e7f4e7;
+      border: 1px solid #4caf50;
+      border-radius: 8px;
+    }
+
+    .confirmation h3 {
+      margin-top: 0;
+    }
+
+    .confirmation button {
+      background-color: #4caf50;
+    }
+
+    .confirmation button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Book Your Train Ticket</h2>
+    <form id="train-form">
+      <label for="user_name">Name:</label>
+      <input type="text" id="user_name" required />
+
+      <label for="departure">Departure Station:</label>
+      <select id="departure" required>
+        <option value="">Select Departure Station</option>
+        <option value="Colombo">Colombo</option>
+        <option value="Kandy">Kandy</option>
+        <option value="Galle">Galle</option>
+      </select>
+
+      <label for="destination">Destination Station:</label>
+      <select id="destination" required>
+        <option value="">Select Destination Station</option>
+        <option value="Colombo">Colombo</option>
+        <option value="Kandy">Kandy</option>
+        <option value="Galle">Galle</option>
+      </select>
+
+      <label for="date">Travel Date:</label>
+      <input type="date" id="date" required />
+
+      <button type="submit">Book Ticket</button>
+    </form>
+    
+    <div class="confirmation" id="confirmation">
+      <h3>Booking Confirmed!</h3>
+      <p><strong>Name:</strong> <span id="confirm_name"></span></p>
+      <p><strong>Departure Station:</strong> <span id="confirm_departure"></span></p>
+      <p><strong>Destination Station:</strong> <span id="confirm_destination"></span></p>
+      <p><strong>Travel Date:</strong> <span id="confirm_date"></span></p>
+      <p><strong>Serial Number:</strong> <span id="confirm_serial_number"></span></p>
+      <p><strong>Seat Number:</strong> <span id="confirm_seat_number"></span></p>
+      <button onclick="window.print()">Print Ticket</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to generate a random seat number
+    function generateSeatNumber() {
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+      const row = Math.floor(Math.random() * 20) + 1; // Random row between 1-20
+      const letter = letters[Math.floor(Math.random() * letters.length)]; // Random seat letter A-F
+      return letter + row;
+    }
+
+    // Event listener for form submission
+    const form = document.getElementById('train-form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Collect form data
+      const user_name = document.getElementById('user_name').value;
+      const departure = document.getElementById('departure').value;
+      const destination = document.getElementById('destination').value;
+      const date = document.getElementById('date').value;
+
+      // Generate Serial Number (Random ID) and Seat Number (Random Seat)
+      const serialNumber = 'SN' + Math.floor(Math.random() * 1000000); // Random serial number
+      const seatNumber = generateSeatNumber(); // Random seat number
+
+      // Make sure all required fields are filled
+      if (user_name && departure && destination && date) {
+        // Display the confirmation
+        document.getElementById('confirm_name').textContent = user_name;
+        document.getElementById('confirm_departure').textContent = departure;
+        document.getElementById('confirm_destination').textContent = destination;
+        document.getElementById('confirm_date').textContent = date;
+        document.getElementById('confirm_serial_number').textContent = serialNumber;
+        document.getElementById('confirm_seat_number').textContent = seatNumber;
+
+        // Show the confirmation message
+        document.getElementById('confirmation').style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>
